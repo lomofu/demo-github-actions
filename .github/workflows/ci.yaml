@@ -1,0 +1,26 @@
+name: Test Matrix
+
+on:
+  push:
+
+jobs:
+  prepare:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Echo
+        run: echo "hello"
+  build:
+    needs:
+      - prepare
+    runs-on: ubuntu-latest
+    strategy:
+      matrix: 
+        version: [1, 2]
+    steps:
+      - name: Echo
+        run: |
+          if [ "${{ matrix.version }}" = "2" ]; then
+            echo "Intentionally failing on version 2"
+            exit 1
+          fi
+          echo "OK for version ${{ matrix.version }}"
