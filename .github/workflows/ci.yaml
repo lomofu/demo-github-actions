@@ -25,3 +25,10 @@ jobs:
             exit 1
           fi
           echo "OK for version ${{ matrix.version }}"
+  finally:
+    needs: 
+      - build
+    runs-on: ubuntu-latest
+    if: ${{ success() }}
+    steps:
+      - run: echo "Finish"
